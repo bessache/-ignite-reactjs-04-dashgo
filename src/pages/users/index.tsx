@@ -25,7 +25,7 @@ export default function UserList() {
         base: false,
         lg: true,
     })
-    async function handlePrefetchUser(userId: number){
+    async function handlePrefetchUser(userId: string){
 
         await queryClient.prefetchQuery(['user', userId], async ()=>{
             const response = await api.get(`users/${userId}`)
@@ -55,7 +55,6 @@ export default function UserList() {
                                 fontSize="sm" 
                                 colorScheme="pink"
                                 leftIcon={<Icon as={RiAddLine} fontSize="20"/>}
-
                             >
                                 Criar novo usuário
                             </Button>
@@ -69,7 +68,6 @@ export default function UserList() {
                         <Flex justify="center">
                             <Text>Falha ao obter dados dos usuárioas</Text>
                         </Flex>
-
                     ) : (
                         <>
                             <Table colorScheme="whiteAlpha">
