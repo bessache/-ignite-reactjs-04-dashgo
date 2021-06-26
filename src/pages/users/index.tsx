@@ -10,26 +10,27 @@ import {useQuery} from 'react-query'
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/SideBar";
+import { api } from "../../services/api";
 
 export default function UserList() {
 
     const {data, isLoading, isFetching, error} = useQuery('users', async () => {
-        const response = await fetch('http://localhost:3000/api/users')
-        const data = response.json()
-        // const users = data.users.map(user=>{
-        //     return {
-        //         id:user.id,
-        //         name:user.name,
-        //         email:user.email,
-        //         createdAt:new Date(user.createdAt).toLocaleString('pt-BR', {
-        //             day: '2-digit',
-        //             month: 'long',
-        //             year: 'numeric'
-        //         }),
-        //     }
-        // });
+        const {data} = await api.get('users')
         
-        return data;
+        const users = data.users.map(user=>{
+            return {
+                id:user.id,
+                name:user.name,
+                email:user.email,
+                createdAt:new Date(user.createdAt).toLocaleString('pt-BR', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                }),
+            }
+        });
+        
+        return users;
     }, {
         staleTime: 1000 * 5 //5seconds
     })
@@ -87,7 +88,7 @@ export default function UserList() {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {data.users.map(user=>{
+                                    {data.map(user=>{
                                         return (
                                             <Tr key={user.id}>
                                                 <Td px={["4", "4", "6"]}>
