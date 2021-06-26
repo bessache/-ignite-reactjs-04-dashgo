@@ -1,5 +1,6 @@
 import {ActiveModelSerializer, createServer, Factory, Model, Response} from 'miragejs'
 import faker from 'faker'
+import { GetServerSideProps } from 'next'
 
 type User = {
     name: string;
@@ -59,3 +60,4 @@ export function makeServer() {
     })
     return server
 }
+
